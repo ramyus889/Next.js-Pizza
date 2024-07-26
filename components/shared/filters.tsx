@@ -1,5 +1,6 @@
 "use client";
 
+import { useFilterIngredients } from "@/hooks/useFilterIngredients";
 import React from "react";
 import { Input } from "../ui";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
@@ -12,12 +13,17 @@ interface Props {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+  const { ingredients, loading, selectedIds, onAddId } = useFilterIngredients();
+  const items = ingredients.map((item) => ({
+    value: String(item.id),
+    text: item.name,
+  }));
   return (
     <div className={className}>
       <Title text="Фильтрация" size="sm" className="font-bold mb-5" />
       <div className="flex flex-col gap-4">
-        <FilterCheckbox text="Можно собирать" value="1" />
-        <FilterCheckbox text="Новинки" value="2" />
+        <FilterCheckbox name="qwe" text="Можно собирать" value="1" />
+        <FilterCheckbox name="sdwawq" text="Новинки" value="2" />
       </div>
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="font-bold mb-3">Цена от и до:</p>
@@ -36,84 +42,14 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
       <CheckboxFiltersGroup
         title="Ингридиенты"
+        name="ingredients"
         limit={6}
-        defaultItems={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моццарелла",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Солённые огурчики",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
-        items={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моццарелла",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Солённые огурчики",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моццарелла",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Солённые огурчики",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
+        defaultItems={items.slice(0, 6)}
+        items={items}
         className="mt-5"
+        loading={loading}
+        onClickCheckbox={onAddId}
+        selectedIds={selectedIds}
       />
     </div>
   );
