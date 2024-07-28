@@ -1,10 +1,14 @@
 "use client";
 
-import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
+import { PizzaSize, PizzaType, pizzaTypes } from "@/shared/constants/pizza";
+import { usePizzaOptions } from "@/shared/hooks/use-pizza-options";
+import { getPizzaDetails } from "@/shared/lib/get-pizza-details";
 import { cn } from "@/shared/lib/utils";
+import { Ingredient, ProductItem } from "@prisma/client";
 import React from "react";
 import { Button } from "../ui";
 import { GroupVariants } from "./group-variants";
+import { IngredientItem } from "./ingredient-item";
 import { PizzaImage } from "./pizza-image";
 import { Title } from "./title";
 
@@ -12,9 +16,9 @@ interface Props {
   imageUrl: string;
   name: string;
   className?: string;
-  ingredients: any[];
-  items?: any[];
-  onClickAdd?: VoidFunction;
+  ingredients: Ingredient[];
+  items: ProductItem[];
+  onClickAddCart?: VoidFunction;
 }
 
 export const ChoosePizzaForm: React.FC<Props> = ({
@@ -22,15 +26,30 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   items,
   imageUrl,
   ingredients,
-  onClickAdd,
+  onClickAddCart,
   className,
 }) => {
-  const [size, setSize] = React.useState<PizzaSize>(20);
-  const [type, setType] = React.useState<PizzaType>(1);
+  const {
+    type,
+    size,
+    selectedIngredients,
+    availableSizes,
+    setType,
+    setSize,
+    addIngredient,
+  } = usePizzaOptions(items);
 
-  const textDetaills = "30 см, традиционное тесто 30";
-  const totalPrice = 300;
-  const pizzaSizes = 20;
+  const { totalPrice, textDetaills } = getPizzaDetails(
+    type,
+    size,
+    items,
+    ingredients,
+    selectedIngredients
+  );
+
+  const handleClickAdd = () => {
+    onClickAddCart?.();
+  };
 
   return (
     <div className={cn(className, "flex flex-1")}>
@@ -40,9 +59,36 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />
-        <p className="text-gray-400 my-5">{textDetaills}</p>
+        <p className="text-gray-400 my-4">{textDetaills}</p>
 
-        <GroupVariants items={pizzaSizes} />
+        <div className="flex flex-col gap-3 mt-5">
+          <GroupVariants
+            items={availableSizes}
+            value={String(size)}
+            onClick={(value) => setSize(Number(value) as PizzaSize)}
+          />
+
+          <GroupVariants
+            items={pizzaTypes}
+            value={String(type)}
+            onClick={(value) => setType(Number(value) as PizzaType)}
+          />
+        </div>
+
+        <div className="bg-gray-50 p-5 rounded-md h-[420px] overflow-auto mt-5 scrollbar">
+          <div className="grid grid-cols-3 gap-3">
+            {ingredients.map((ingredient) => (
+              <IngredientItem
+                key={ingredient.id}
+                name={ingredient.name}
+                price={ingredient.price}
+                imageUrl={ingredient.imageUrl}
+                active={selectedIngredients.has(ingredient.id)}
+                onClick={() => addIngredient(ingredient.id)}
+              />
+            ))}
+          </div>
+        </div>
 
         <Button className="h-[55px] px-10 mt-5 text-base rounded-[18px] w-full">
           Добавить в корзину за {totalPrice} ₽

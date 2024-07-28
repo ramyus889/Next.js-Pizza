@@ -27,7 +27,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
             imageUrl={product.imageUrl}
             name={product.name}
             items={product.items}
-            onClickAdd={onCloseModal}
+            onClickAddCart={onCloseModal}
             ingredients={product.ingredients}
           />
         ) : (
