@@ -88,7 +88,7 @@ model Cart {
   userId Int?  @unique
   user   User? @relation(fields: [userId], references: [id])
 
-  tokenId String?
+  token String
 
   totalAmount Int @default(0)
 
@@ -108,7 +108,7 @@ model CartItem {
   cart   Cart @relation(fields: [cartId], references: [id])
 
   ingredients Ingredient[]
-  quantity    Int
+  quantity    Int          @default(1)
   pizzaSize   Int?
   type        Int?
 
