@@ -6,6 +6,7 @@ import {
 } from "../../shared/components/shared";
 
 import { prisma } from "@/prisma/prisma-client";
+import { Suspense } from "react";
 import { ProductsGroupList } from "../../shared/components/shared/products-group-list";
 
 export default async function Home() {
@@ -33,7 +34,9 @@ export default async function Home() {
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
           <div className="w-[250px]">
-            <Filters />
+            <Suspense>
+              <Filters />
+            </Suspense>
           </div>
           <div className="flex-1">
             <div className="flex flex-col gap-16">
