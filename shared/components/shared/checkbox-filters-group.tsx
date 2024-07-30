@@ -13,11 +13,11 @@ interface Props {
   items: Item[];
   defaultItems?: Item[];
   limit?: number;
-  searchInputPlaceholder?: string;
-  className?: string;
-  selected?: Set<string>;
-  onClickCheckbox?: (id: string) => void;
   loading?: boolean;
+  searchInputPlaceholder?: string;
+  onClickCheckbox?: (id: string) => void;
+  selected?: Set<string>;
+  className?: string;
   name?: string;
 }
 

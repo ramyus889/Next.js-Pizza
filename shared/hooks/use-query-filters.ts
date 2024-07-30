@@ -13,7 +13,7 @@ export const useQueryFilters = (filters: Filters) => {
       pizzaTypes: Array.from(filters.pizzaTypes),
     };
 
-    const queryString = qs.stringify(filters, {
+    const queryString = qs.stringify(params, {
       arrayFormat: "comma",
     });
 
