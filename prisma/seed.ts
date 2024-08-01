@@ -149,13 +149,63 @@ async function up() {
     data: {
       productItemId: 1,
       cartId: 1,
-      userId: 1,
-      quantity: 1,
-      pizzaSize: 20,
+      quantity: 2,
       ingredients: {
         connect: [{ id: 1 }, { id: 2 }, { id: 3 }],
       },
     },
+  });
+
+  await prisma.story.createMany({
+    data: [
+      {
+        previewImageUrl: "/stories/stories1.webp",
+      },
+      {
+        previewImageUrl: "/stories/stories2.webp",
+      },
+      {
+        previewImageUrl: "/stories/stories3.webp",
+      },
+      {
+        previewImageUrl: "/stories/stories4.webp",
+      },
+      {
+        previewImageUrl: "/stories/stories5.webp",
+      },
+      {
+        previewImageUrl: "/stories/stories6.webp",
+      },
+    ],
+  });
+
+  await prisma.storyItem.createMany({
+    data: [
+      {
+        storyId: 1,
+        sourceUrl: "/stories/storiesMain1.webp",
+      },
+      {
+        storyId: 1,
+        sourceUrl: "/stories/storiesMain2.webp",
+      },
+      {
+        storyId: 1,
+        sourceUrl: "/stories/storiesMain3.webp",
+      },
+      {
+        storyId: 1,
+        sourceUrl: "/stories/storiesMain4.webp",
+      },
+      {
+        storyId: 1,
+        sourceUrl: "/stories/storiesMain5.webp",
+      },
+      {
+        storyId: 1,
+        sourceUrl: "/stories/storiesMain3.webp",
+      },
+    ],
   });
 }
 

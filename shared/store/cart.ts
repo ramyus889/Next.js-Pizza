@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { CartStateItem, getCartDetails } from "../lib/get-cart-details";
 import { Api } from "../services/api-client";
-import { CreateCartItemValues } from "../services/dto/cart";
+import { CreateCartItemValues } from "../services/dto/cart.dto";
 
 export interface CartState {
   loading: boolean;

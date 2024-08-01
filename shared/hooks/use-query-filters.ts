@@ -4,21 +4,29 @@ import React from "react";
 import { Filters } from "./use-filter";
 
 export const useQueryFilters = (filters: Filters) => {
+  const isMounted = React.useRef(false);
   const router = useRouter();
+
   React.useEffect(() => {
-    const params = {
-      ...filters.prices,
-      ingredients: Array.from(filters.selectedIngredients),
-      sizes: Array.from(filters.sizes),
-      pizzaTypes: Array.from(filters.pizzaTypes),
-    };
+    if (isMounted.current) {
+      const params = {
+        ...filters.prices,
+        pizzaTypes: Array.from(filters.pizzaTypes),
+        sizes: Array.from(filters.sizes),
+        ingredients: Array.from(filters.selectedIngredients),
+      };
 
-    const queryString = qs.stringify(params, {
-      arrayFormat: "comma",
-    });
+      const query = qs.stringify(params, {
+        arrayFormat: "comma",
+      });
 
-    router.push(`?${queryString}`, {
-      scroll: false,
-    });
-  }, [filters, router]);
+      router.push(`?${query}`, {
+        scroll: false,
+      });
+
+      console.log(filters, 999);
+    }
+
+    isMounted.current = true;
+  }, [filters]);
 };
