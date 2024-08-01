@@ -5,7 +5,6 @@ import {
   TopBar,
 } from "../../shared/components/shared";
 
-import { Stories } from "@/shared/components/shared/stories";
 import { findPizzas, GetSearchParams } from "@/shared/lib/find-pizzas";
 import { Suspense } from "react";
 import { ProductsGroupList } from "../../shared/components/shared/products-group-list";
@@ -27,7 +26,7 @@ export default async function Home({
           (category) => category.products.length > 0
         )}
       />
-      <Stories />
+      {/* <Stories /> */}
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
           <div className="w-[250px]">
