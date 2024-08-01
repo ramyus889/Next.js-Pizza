@@ -22,15 +22,8 @@ import { CartDrawerItem } from "./cart-drawer-item";
 import { Title } from "./title";
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const {
-    totalAmount,
-    items,
-    updateItemQuantity,
-    removeCartItem,
-    addCartItem,
-  } = useCart();
-
   const [redirecting, setRedirecting] = React.useState(false);
+  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
   const onClickCountButton = (
     id: number,

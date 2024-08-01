@@ -15,7 +15,7 @@ import { Title } from "./title";
 interface Props {
   imageUrl: string;
   name: string;
-  loading: boolean;
+  loading?: boolean;
   className?: string;
   ingredients: Ingredient[];
   items: ProductItem[];
